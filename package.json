@@ -1,0 +1,15 @@
+{
+  "name": "mock-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:soundobj/mock-server.git",
+  "author": "soundobj <soundobj@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^4.16.4",
+    "import-fresh": "^3.0.0",
+    "json-server": "^0.14.2",
+    "minimist": "^1.2.0",
+    "require-uncached": "^2.0.0"
+  }
+}
