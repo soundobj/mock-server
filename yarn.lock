@@ -454,6 +454,11 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+express-delay@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/express-delay/-/express-delay-0.2.0.tgz#19ac6dc274447a3d06088f1f1c4bab23ecab3b9e"
+  integrity sha1-GaxtwnREej0GCI8fHEurI+yrO54=
+
 express-urlrewrite@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/express-urlrewrite/-/express-urlrewrite-1.2.0.tgz#8e667b7761ff1c7ffdb0efa05d64035387c823eb"

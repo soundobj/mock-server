@@ -1,17 +1,25 @@
 const av = require('minimist')(process.argv.slice(2));
+const delay = require('express-delay');
 const importFresh = require('import-fresh');
 const jsonServer = require('json-server');
 const server = jsonServer.create();
 const router = jsonServer.router(av.d);
 const middlewares = [
 	jsonServer.defaults(),
+	[
+		// refresh db aka --watch json-server CLI
+		(req, res, next) => {
+			router.db.assign(importFresh(av.d)).write();
+			next();
+		}
+	]
 ]
 
+if (av.l) {
+	server.use(delay(av.l));
+}
+
 server.use(middlewares);
-// server.use((req, res, next) => {
-// 	router.db.assign(importFresh(av.ad)).write();
-// 	next()
-// });
 server.get('/tests-refresh', (req, res) => {
 	router.db.assign(importFresh(av.d)).write();
 	console.error("refresh!!", 0);
