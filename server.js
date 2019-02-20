@@ -1,3 +1,4 @@
+const express = require('express');
 const av = require('minimist')(process.argv.slice(2));
 const delay = require('express-delay');
 const importFresh = require('import-fresh');
@@ -17,6 +18,15 @@ const middlewares = [
 
 if (av.l) {
 	server.use(delay(av.l));
+}
+
+if (av.s) {
+	server.use(express.static(av.s));
+}
+
+if (av.r) {
+	const router = require(av.r);
+	router(server);
 }
 
 server.use(middlewares);
