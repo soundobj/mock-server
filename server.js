@@ -4,13 +4,16 @@ const delay = require('express-delay');
 const importFresh = require('import-fresh');
 const jsonServer = require('json-server');
 const server = jsonServer.create();
-const router = jsonServer.router(av.d);
+const router = (av.d) ? jsonServer.router(av.d)
+	: jsonServer.router({});
 const middlewares = [
 	jsonServer.defaults(),
 	[
 		// refresh db aka --watch json-server CLI
 		(req, res, next) => {
-			router.db.assign(importFresh(av.d)).write();
+			if (av.d) {
+				router.db.assign(importFresh(av.d)).write();
+			}
 			next();
 		}
 	]
@@ -24,18 +27,19 @@ if (av.s) {
 	server.use(express.static(av.s));
 }
 
+server.use(middlewares);
+
 if (av.r) {
-	const router = require(av.r);
-	router(server);
+	const router = require(av.r).router;
+	router(server, av.l || 0);
 }
 
-server.use(middlewares);
 server.get('/tests-refresh', (req, res) => {
 	router.db.assign(importFresh(av.d)).write();
 	console.error("refresh!!", 0);
-
 	res.sendStatus(200);
 });
+
 server.use(router);
 server.listen(3000, () => {
 	console.log('JSON Server is running');
